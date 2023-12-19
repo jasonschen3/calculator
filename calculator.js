@@ -17,7 +17,7 @@ function operate(num1, num2, operator) {
 }
 // Helper for precision
 function strip(number) {
-  return parseFloat(number.toPrecision(7));
+  return parseFloat(number.toPrecision(10));
 }
 
 // Store number into display object
@@ -62,7 +62,7 @@ equals.addEventListener("click", () => {
   }
 });
 
-// Loop thru numbers to add buttons for each 1234567890
+// Loop thru numbers to add buttons for each 0123456789
 // Added dot logic here too
 const numbersButton = document.querySelectorAll(".number");
 let isDot = false;
@@ -89,9 +89,15 @@ numbersButton.forEach((button) => {
         display.textContent = displayVari.num1;
       } else {
         // Already initialized when clicked dot
-        displayVari.num1 += strip(currentNum * dotFactor);
+        displayVari.num1 += currentNum * dotFactor;
         dotFactor *= 0.1;
-        display.textContent = displayVari.num1;
+
+        // edge case of zero
+        if (currentNum === 0) {
+          display.textContent += "0";
+        } else {
+          display.textContent = displayVari.num1;
+        }
       }
     } else {
       if (!isDot) {
@@ -99,12 +105,17 @@ numbersButton.forEach((button) => {
           displayVari.num2 !== null
             ? displayVari.num2 * 10 + currentNum
             : currentNum;
-
         display.textContent = displayVari.num2;
       } else {
         displayVari.num2 += strip(currentNum * dotFactor);
         dotFactor *= 0.1;
-        display.textContent = displayVari.num2;
+
+        // edge case of zero
+        if (currentNum === 0) {
+          display.textContent += "0";
+        } else {
+          display.textContent = displayVari.num2;
+        }
       }
     }
   });
