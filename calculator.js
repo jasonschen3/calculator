@@ -89,7 +89,7 @@ numbersButton.forEach((button) => {
         display.textContent = displayVari.num1;
       } else {
         // Already initialized when clicked dot
-        displayVari.num1 += currentNum * dotFactor;
+        displayVari.num1 += strip(currentNum * dotFactor);
         dotFactor *= 0.1;
 
         // edge case of zero

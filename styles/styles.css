@@ -33,7 +33,6 @@ html, body {
     max-width: 100%; /* Make sure it doesn't exceed the width of its container */
     overflow: hidden; /* Hide overflow content */
     white-space: nowrap; /* Prevents the text from wrapping */
-    text-overflow: ellipsis; /* Adds an ellipsis when the text overflows */
 }
 
 button {
