@@ -29,6 +29,7 @@ let displayVari = {
     this.num1 = null;
     this.num2 = null;
     this.operator = null;
+    justPressedEquals = false;
     isDot = false;
     dotFactor = 0.1;
   },
@@ -39,6 +40,7 @@ const display = document.querySelector("#display");
 const equals = document.querySelector("#equals");
 
 // Equals logic
+let justPressedEquals = false; // Used for dot logic
 equals.addEventListener("click", () => {
   if (
     displayVari.num1 !== null &&
@@ -56,20 +58,25 @@ equals.addEventListener("click", () => {
     displayVari.operator = null;
     isDot = false;
     dotFactor = 0.1;
+    justPressedEquals = true;
   }
 });
 
-// Loop thru numbers to add buttons for each
+// Loop thru numbers to add buttons for each 1234567890
 // Added dot logic here too
 const numbersButton = document.querySelectorAll(".number");
 let isDot = false;
 let dotFactor = 0.1;
-
 numbersButton.forEach((button) => {
   button.addEventListener("click", () => {
     const currentNum = parseInt(button.textContent);
+
+    // Check if just pressed equals and no operator is pressed
+    if (displayVari.operator === null && justPressedEquals) {
+      displayVari.reset();
+    }
     // Limit number of digits
-    if (display.textContent.length === 9) {
+    if (displayVari.operator === null && display.textContent.length === 9) {
       return;
     }
     // Check if operator is set, then operate on first or second number accordingly
@@ -103,7 +110,7 @@ numbersButton.forEach((button) => {
   });
 });
 
-// Add event listeners for operators
+// Add event listeners for operators +-/*
 const opButtons = document.querySelectorAll(".op");
 opButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -137,7 +144,7 @@ clear.addEventListener("click", () => {
 const dot = document.querySelector("#dot");
 dot.addEventListener("click", () => {
   // Check to see if we need a new number after equals
-  if (displayVari.num1 !== null && displayVari.operator === null) {
+  if (displayVari.operator === null && justPressedEquals) {
     displayVari.reset();
   }
   if (
